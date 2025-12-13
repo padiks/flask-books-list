@@ -1,22 +1,57 @@
-from flask import Flask, render_template, redirect, url_for, request
+from flask import Flask, render_template, redirect, url_for, request, session
 import sqlite3
 
 DB_PATH = "db.sqlite3"
 
 app = Flask(__name__)
+app.secret_key = "The quick brown fox jumps over the fence."  # required for sessions
 
 # ---------------- Template loader ----------------
-TEMPLATE_MODULE = "generic"  # Change to "ui_toolkit" or other folder
+AVAILABLE_TEMPLATES = [
+    "tailwind",
+    "bootstrap",    
+    "bulma",    
+    "foundation",
+    "generic",
+    "metro_ui",
+    "papercss",    
+    "purecss",
+    "semantic_ui",
+    "ui_toolkit"
+]
 
+# Set the template module you want to use
+TEMPLATE_MODULE = "tailwind"  # change this to any in AVAILABLE_TEMPLATES
+
+# Ensure it is valid
+if TEMPLATE_MODULE not in AVAILABLE_TEMPLATES:
+    raise ValueError(f"Invalid TEMPLATE_MODULE '{TEMPLATE_MODULE}'. Must be one of {AVAILABLE_TEMPLATES}")
+
+# Function to get template path
 def template_path(name):
-    """Return the path to the template inside the module folder."""
-    return f"{TEMPLATE_MODULE}/{name}.html"
+    """
+    Return the path to the template inside the module folder.
+    Checks session for a selected theme; falls back to default TEMPLATE_MODULE.
+    """
+    theme = session.get('theme', TEMPLATE_MODULE)
+    return f"{theme}/{name}.html"
+
+
+@app.route('/set_theme', methods=['POST'])
+def set_theme():
+    selected_theme = request.form.get('theme')
+    if selected_theme in AVAILABLE_TEMPLATES:
+        session['theme'] = selected_theme
+    return redirect(request.referrer or url_for('index'))
+
 
 # Make template_path available in Jinja templates
 @app.context_processor
 def inject_template_path():
-    return dict(template_path=template_path)
-
+    return dict(
+        template_path=template_path,
+        AVAILABLE_TEMPLATES=AVAILABLE_TEMPLATES
+    )
 
 # ---------------- Database helper ----------------
 
@@ -160,5 +195,4 @@ def delete(book_id):
 #    return "Add new book (dummy page)"
 
 if __name__ == '__main__':
-    app.run(debug=True, port=5001)
-
+    app.run(debug=True, port=8000)
