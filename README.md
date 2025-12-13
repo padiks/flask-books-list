@@ -24,7 +24,7 @@ metro_ui, purecss, papercss, semantic_ui, ui_toolkit
 
 * Default theme: `tailwind`.
 
-* Users can **change the theme at runtime** via a dropdown in the UI (next to the Add button).
+* Users can **change the theme at runtime** via a dropdown in the UI.
 
 * When a new theme is selected:
 
@@ -245,3 +245,4 @@ if __name__ == '__main__':
 
 This project is for **learning and educational use**.
 Feel free to explore, extend, and build upon it.
+
