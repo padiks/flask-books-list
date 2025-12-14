@@ -1,0 +1,61 @@
+{% extends template_path('base') %}
+
+{% block title %}List Books - Flask + UI Toolkit{% endblock %}
+
+{% block content %}
+<div class="uk-card uk-card-default uk-card-body" style="background: #ffffff;">
+    <div class="uk-flex uk-flex-between uk-margin-small-bottom">
+        <h2 class="uk-heading-line"><span>Books Library</span></h2>
+        <a href="{{ url_for('add') }}" class="uk-button uk-button-primary uk-button-small">Add New Book</a>
+    </div>
+
+    <div style="overflow-x:auto;">
+        <table id="books_table" class="uk-table uk-table-divider uk-table-hover" style="width: 90%; margin: auto;">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Title</th>
+                    <th>Author</th>
+                    <th>Published</th>
+                    <th>Release</th>
+                    <th>Category</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for b in books %}
+                <tr>
+                    <td>{{ b.id }}</td>
+                    <td>{{ b.title }}</td>
+                    <td>{{ b.author }}</td>
+                    <td>{{ b.published_date }}</td>
+                    <td>{{ b.release }}</td>
+                    <td>{{ b.category_name }}</td>
+                    <td>
+                        <div class="uk-flex uk-flex-nowrap" style="gap: 4px;">
+                            <a href="{{ url_for('view', book_id=b.id) }}" class="uk-button uk-button-small uk-button-default">View</a>
+                            <a href="{{ url_for('edit', book_id=b.id) }}" class="uk-button uk-button-small uk-button-secondary">Edit</a>
+                            <a href="{{ url_for('delete', book_id=b.id) }}" class="uk-button uk-button-small uk-button-danger">Delete</a>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+$(document).ready(function() {
+    $('#books_table').DataTable({
+        "pageLength": 5,
+        "lengthMenu": [5, 10, 20, 50],
+        "columnDefs": [
+            { "orderable": false, "targets": -1 } // Actions column not sortable
+        ]
+    });
+});
+</script>
+{% endblock %}

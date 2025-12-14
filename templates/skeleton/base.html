@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Flask + Skeleton{% endblock %}</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect x='10' y='10' width='30' height='30' fill='%231e90ff'/><rect x='60' y='10' width='30' height='30' fill='%23ff6347'/><circle cx='50' cy='70' r='20' fill='%2332cd32'/></svg>">
+
+    <!-- Skeleton CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css">
+
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+
+    <style>
+        body {
+            padding: 16px;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        /* Full-width container */
+        main {
+            width: 95%;
+            max-width: 95%;
+            padding: 0 16px;
+        }
+
+        table.dataTable {
+            width: 95% !important;
+            margin: auto;
+        }
+
+        td, th {
+            padding: 6px 8px;
+        }
+
+        .button-group a {
+            margin-right: 4px;
+            font-size: 12px;
+            padding: 4px 6px;
+            text-decoration: none;
+            border-radius: 3px;
+        }
+
+        .btn { background-color: #3498db; color: white; }
+        .btn-edit { background-color: #f1c40f; color: black; }
+        .btn-delete { background-color: #e74c3c; color: white; }
+
+        {% block extra_css %}{% endblock %}
+    </style>
+
+    {% block extra_head %}{% endblock %}
+</head>
+<body>
+    <main>
+        <!-- Theme selector -->
+        <form method="POST" action="{{ url_for('set_theme') }}" style="margin-bottom: 16px;">
+            <label>
+                Theme
+                <select name="theme" onchange="this.form.submit()">
+                    {% for t in AVAILABLE_TEMPLATES %}
+                        <option value="{{ t }}" {% if session.get('theme', 'tailwind') == t %}selected{% endif %}>
+                            {{ t|replace('_', ' ')|title }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </label>
+        </form>
+
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <!-- DataTables JS -->
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+
+    {% block scripts %}{% endblock %}
+</body>
+</html>

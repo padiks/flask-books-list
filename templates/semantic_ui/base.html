@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Flask + Semantic UI{% endblock %}</title>
+
+    <!-- Favicon as inline SVG -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect x='10' y='10' width='30' height='30' fill='%231e90ff'/><rect x='60' y='10' width='30' height='30' fill='%23ff6347'/><circle cx='50' cy='70' r='20' fill='%2332cd32'/></svg>">
+
+    <!-- Semantic UI CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fomantic-ui@2.9.0/dist/semantic.min.css">
+
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+
+    <style>
+        body {
+            background-color: #ffffff; /* page background white */
+            font-family: 'Segoe UI', sans-serif;
+            font-size: 13px;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h2 {
+            font-size: 1.2rem;
+            margin-bottom: 12px;
+        }
+
+        /* DataTables adjustments */
+        div.dataTables_wrapper .dataTables_length,
+        div.dataTables_wrapper .dataTables_filter,
+        div.dataTables_wrapper .dataTables_info,
+        div.dataTables_wrapper .dataTables_paginate {
+            font-size: 12px;
+        }
+
+        /* Table adjustments */
+        table.ui.compact.table {
+            width: 100% !important;
+            font-size: 12px;
+        }
+
+        table.ui.compact.table td, table.ui.compact.table th {
+            padding: 4px 6px;
+        }
+
+        td > .ui.buttons {
+            display: flex;
+            gap: 4px;
+        }
+
+        {% block extra_css %}{% endblock %}
+    </style>
+
+    {% block extra_head %}{% endblock %}
+</head>
+<body>
+    <div class="ui container">
+		<form method="POST" action="{{ url_for('set_theme') }}" class="inline-block ml-4">
+			<select name="theme" onchange="this.form.submit()" class="border rounded px-2 py-1">
+				{% for t in AVAILABLE_TEMPLATES %}
+					<option value="{{ t }}" {% if session.get('theme', 'tailwind') == t %}selected{% endif %}>
+						{{ t|replace('_', ' ')|title }}
+					</option>
+				{% endfor %}
+			</select>
+		</form>	
+        {% block content %}{% endblock %}
+    </div>
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <!-- DataTables JS -->
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <!-- Semantic UI JS -->
+    <script src="https://cdn.jsdelivr.net/npm/fomantic-ui@2.9.0/dist/semantic.min.js"></script>
+
+    {% block scripts %}{% endblock %}
+</body>
+</html>

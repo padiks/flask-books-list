@@ -1,0 +1,26 @@
+{% extends template_path('base') %}
+
+{% block title %}View Book - Flask Books List{% endblock %}
+
+{% block content %}
+<div class="uk-card uk-card-default uk-card-body" style="background: #ffffff;">
+    <div class="uk-flex uk-flex-between uk-margin-small-bottom">
+        <h2 class="uk-heading-line"><span>View Book</span></h2>
+        <a href="{{ url_for('index') }}" class="uk-button uk-button-small uk-button-default">Back to List</a>
+    </div>
+
+    <table class="uk-table uk-table-small uk-table-divider" style="width: 100%;">
+        <tbody>
+            <tr><th>ID</th><td>{{ book.id }}</td></tr>
+            <tr><th>Title</th><td>{{ book.title }}</td></tr>
+            <tr><th>Hepburn</th><td>{{ book.hepburn }}</td></tr>
+            <tr><th>Author</th><td>{{ book.author }}</td></tr>
+            <tr><th>Published Date</th><td>{{ book.published_date }}</td></tr>
+            <tr><th>Release</th><td>{{ book.release }}</td></tr>
+            <tr><th>URL</th><td>{{ book.url }}</td></tr>
+            <tr><th>Summary</th><td>{{ book.summary }}</td></tr>
+            <tr><th>Category</th><td>{{ book.category_name }}</td></tr>
+        </tbody>
+    </table>
+</div>
+{% endblock %}

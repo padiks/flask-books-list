@@ -1,0 +1,80 @@
+{% extends template_path('base') %}
+
+{% block title %}{{ 'Edit Book' if book else 'Add Book' }} - Flask Books List{% endblock %}
+
+{% block content %}
+<div class="uk-card uk-card-default uk-card-body" style="background: #ffffff;">
+    <div class="uk-flex uk-flex-between uk-margin-small-bottom">
+        <h2 class="uk-heading-line"><span>{{ 'Edit Book' if book else 'Add Book' }}</span></h2>
+        <a href="{{ url_for('index') }}" class="uk-button uk-button-small uk-button-default">Back to List</a>
+    </div>
+
+    <form method="post" class="uk-form-stacked">
+        <div class="uk-margin">
+            <label class="uk-form-label">Title</label>
+            <div class="uk-form-controls">
+                <input class="uk-input uk-form-small" type="text" name="title" value="{{ book.title if book else '' }}">
+            </div>
+        </div>
+
+        <div class="uk-margin">
+            <label class="uk-form-label">Hepburn</label>
+            <div class="uk-form-controls">
+                <input class="uk-input uk-form-small" type="text" name="hepburn" value="{{ book.hepburn if book else '' }}">
+            </div>
+        </div>
+
+        <div class="uk-margin">
+            <label class="uk-form-label">Author</label>
+            <div class="uk-form-controls">
+                <input class="uk-input uk-form-small" type="text" name="author" value="{{ book.author if book else '' }}">
+            </div>
+        </div>
+
+        <div class="uk-margin">
+            <label class="uk-form-label">Published Date</label>
+            <div class="uk-form-controls">
+                <input class="uk-input uk-form-small" type="date" name="published_date" value="{{ book.published_date if book else '' }}">
+            </div>
+        </div>
+
+        <div class="uk-margin">
+            <label class="uk-form-label">Release</label>
+            <div class="uk-form-controls">
+                <input class="uk-input uk-form-small" type="text" name="release" value="{{ book.release if book else '' }}">
+            </div>
+        </div>
+
+        <div class="uk-margin">
+            <label class="uk-form-label">URL</label>
+            <div class="uk-form-controls">
+                <input class="uk-input uk-form-small" type="text" name="url" value="{{ book.url if book else '' }}">
+            </div>
+        </div>
+
+        <div class="uk-margin">
+            <label class="uk-form-label">Summary</label>
+            <div class="uk-form-controls">
+                <textarea class="uk-textarea uk-form-small" name="summary">{{ book.summary if book else '' }}</textarea>
+            </div>
+        </div>
+
+        <div class="uk-margin">
+            <label class="uk-form-label">Category</label>
+            <div class="uk-form-controls">
+                <select class="uk-select uk-form-small" name="category_id">
+                    <option value="">-- Select Category --</option>
+                    {% for c in categories %}
+                    <option value="{{ c.id }}" {% if book and book.category_id == c.id %}selected{% endif %}>{{ c.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+
+        <div class="uk-margin uk-flex uk-flex-left" style="gap: 6px;">
+            <button type="submit" class="uk-button uk-button-primary uk-button-small">Save</button>
+            <a href="{{ url_for('index') }}" class="uk-button uk-button-default uk-button-small">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}
