@@ -10,13 +10,19 @@ app.secret_key = "The quick brown fox jumps over the fence."  # required for ses
 AVAILABLE_TEMPLATES = [
     "tailwind",
     "bootstrap",    
-    "bulma",    
+    "bulma",
+    "daisy_ui",	
     "foundation",
     "generic",
+    "materialize",	
     "metro_ui",
-    "papercss",    
+    "milligram",
+    "minicss",	
+    "papercss",
+    "picocss",	
     "purecss",
     "semantic_ui",
+    "skeleton",	
     "ui_toolkit"
 ]
 
