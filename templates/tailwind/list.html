@@ -1,0 +1,84 @@
+{% extends template_path('base') %}
+
+{% block title %}List Books - Flask + Tailwind{% endblock %}
+
+{% block content %}
+<div class="bg-white shadow rounded-xl p-4 mt-2">
+    <div class="flex justify-between items-center mb-2">
+        <h2 class="text-lg font-semibold border-b-2 border-gray-300 pb-1">
+            Books Library
+        </h2>
+        <a href="{{ url_for('add') }}"
+           class="bg-blue-500 hover:bg-blue-600 text-white text-sm px-3 py-1 rounded">
+            Add New Book
+        </a>
+    </div>
+
+    <div class="overflow-x-auto">
+        <table id="books_table"
+               class="table-auto min-w-full bg-white overflow-hidden"
+               style="width: 95%; margin: auto;">
+            <thead class="bg-white text-gray-600 uppercase text-sm">
+                <tr>
+                    <th class="px-4 py-2 border-b border-gray-200">ID</th>
+                    <th class="px-4 py-2 border-b border-gray-200">Title</th>
+                    <th class="px-4 py-2 border-b border-gray-200">Author</th>
+                    <th class="px-4 py-2 border-b border-gray-200">Published</th>
+                    <th class="px-4 py-2 border-b border-gray-200">Release</th>
+                    <th class="px-4 py-2 border-b border-gray-200">Category</th>
+
+                    <!-- Fixed-width Actions column -->
+                    <th class="px-2 py-2 border-b border-gray-200 w-[100px] text-center">
+                        Actions
+                    </th>
+                </tr>
+            </thead>
+
+            <tbody class="text-sm text-gray-700">
+                {% for b in books %}
+                <tr class="hover:bg-gray-50">
+                    <td class="px-4 py-2 border-b border-gray-200">{{ b.id }}</td>
+                    <td class="px-4 py-2 border-b border-gray-200">{{ b.title }}</td>
+                    <td class="px-4 py-2 border-b border-gray-200">{{ b.author }}</td>
+                    <td class="px-4 py-2 border-b border-gray-200">{{ b.published_date }}</td>
+                    <td class="px-4 py-2 border-b border-gray-200">{{ b.release }}</td>
+                    <td class="px-4 py-2 border-b border-gray-200">{{ b.category_name }}</td>
+
+                    <!-- Fixed-width Actions cell -->
+                    <td class="px-2 py-2 border-b border-gray-200 w-[100px]">
+                        <div class="flex gap-1 justify-center whitespace-nowrap">
+                            <a href="{{ url_for('view', book_id=b.id) }}"
+                               class="bg-gray-200 hover:bg-gray-300 text-gray-800 text-xs px-2 py-1 rounded">
+                                View
+                            </a>
+                            <a href="{{ url_for('edit', book_id=b.id) }}"
+                               class="bg-yellow-200 hover:bg-yellow-300 text-gray-800 text-xs px-2 py-1 rounded">
+                                Edit
+                            </a>
+                            <a href="{{ url_for('delete', book_id=b.id) }}"
+                               class="bg-red-200 hover:bg-red-300 text-gray-800 text-xs px-2 py-1 rounded">
+                                Del
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+$(document).ready(function() {
+    $('#books_table').DataTable({
+        pageLength: 10,
+        lengthMenu: [5, 10, 20, 50],
+        columnDefs: [
+            { orderable: false, targets: -1 } // Actions column
+        ]
+    });
+});
+</script>
+{% endblock %}

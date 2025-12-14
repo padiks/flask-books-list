@@ -1,0 +1,27 @@
+{% extends template_path('base') %}
+
+{% block title %}View Book - Flask + Tailwind{% endblock %}
+
+{% block content %}
+<div class="bg-white shadow rounded p-4">
+    <h2 class="text-lg font-semibold border-b-2 border-gray-300 pb-1 mb-4">View Book</h2>
+
+    <table class="min-w-full divide-y divide-gray-200 text-sm">
+        <tbody class="bg-white divide-y divide-gray-200">
+            <tr><th class="text-left px-2 py-1">ID</th><td class="px-2 py-1">{{ book.id }}</td></tr>
+            <tr><th class="text-left px-2 py-1">Title</th><td class="px-2 py-1">{{ book.title }}</td></tr>
+            <tr><th class="text-left px-2 py-1">Hepburn</th><td class="px-2 py-1">{{ book.hepburn }}</td></tr>
+            <tr><th class="text-left px-2 py-1">Author</th><td class="px-2 py-1">{{ book.author }}</td></tr>
+            <tr><th class="text-left px-2 py-1">Published Date</th><td class="px-2 py-1">{{ book.published_date }}</td></tr>
+            <tr><th class="text-left px-2 py-1">Release</th><td class="px-2 py-1">{{ book.release }}</td></tr>
+            <tr><th class="text-left px-2 py-1">URL</th><td class="px-2 py-1">{{ book.url }}</td></tr>
+            <tr><th class="text-left px-2 py-1">Summary</th><td class="px-2 py-1">{{ book.summary }}</td></tr>
+            <tr><th class="text-left px-2 py-1">Category</th><td class="px-2 py-1">{{ book.category_name }}</td></tr>
+        </tbody>
+    </table>
+
+    <div class="mt-4">
+        <a href="{{ url_for('index') }}" class="bg-gray-200 hover:bg-gray-300 text-gray-800 text-sm px-3 py-1 rounded">Back to list</a>
+    </div>
+</div>
+{% endblock %}

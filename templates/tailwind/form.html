@@ -1,0 +1,63 @@
+{% extends template_path('base') %}
+
+{% block title %}{{ 'Edit Book' if book else 'Add Book' }} - Flask + HTML{% endblock %}
+
+{% block content %}
+<div class="bg-white shadow rounded p-4">
+    <h2 class="text-lg font-semibold border-b-2 border-gray-300 pb-1 mb-4">
+        {{ 'Edit Book' if book else 'Add Book' }}
+    </h2>
+
+    <form method="post" class="space-y-3 text-sm">
+        <div>
+            <label class="block mb-1">Title</label>
+            <input type="text" name="title" value="{{ book.title if book else '' }}" class="border rounded px-2 py-1 w-full">
+        </div>
+
+        <div>
+            <label class="block mb-1">Hepburn</label>
+            <input type="text" name="hepburn" value="{{ book.hepburn if book else '' }}" class="border rounded px-2 py-1 w-full">
+        </div>
+
+        <div>
+            <label class="block mb-1">Author</label>
+            <input type="text" name="author" value="{{ book.author if book else '' }}" class="border rounded px-2 py-1 w-full">
+        </div>
+
+        <div>
+            <label class="block mb-1">Published Date</label>
+            <input type="date" name="published_date" value="{{ book.published_date if book else '' }}" class="border rounded px-2 py-1 w-full">
+        </div>
+
+        <div>
+            <label class="block mb-1">Release</label>
+            <input type="text" name="release" value="{{ book.release if book else '' }}" class="border rounded px-2 py-1 w-full">
+        </div>
+
+        <div>
+            <label class="block mb-1">URL</label>
+            <input type="text" name="url" value="{{ book.url if book else '' }}" class="border rounded px-2 py-1 w-full">
+        </div>
+
+        <div>
+            <label class="block mb-1">Summary</label>
+            <textarea name="summary" class="border rounded px-2 py-1 w-full">{{ book.summary if book else '' }}</textarea>
+        </div>
+
+        <div>
+            <label class="block mb-1">Category</label>
+            <select name="category_id" class="border rounded px-2 py-1 w-full">
+                <option value="">-- Select Category --</option>
+                {% for c in categories %}
+                <option value="{{ c.id }}" {% if book and book.category_id == c.id %}selected{% endif %}>{{ c.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="flex gap-2 mt-4">
+            <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white text-sm px-3 py-1 rounded">Save</button>
+            <a href="{{ url_for('index') }}" class="bg-gray-200 hover:bg-gray-300 text-gray-800 text-sm px-3 py-1 rounded">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,61 @@
+{% extends template_path('base') %}
+
+{% block title %}{{ 'Edit Book' if book else 'Add Book' }} - Flask Books List{% endblock %}
+
+{% block content %}
+<div class="card shadow-sm bg-white p-3 mb-4">
+    <h2 class="mb-3">{{ 'Edit Book' if book else 'Add Book' }}</h2>
+
+    <form method="post" class="row g-2">
+        <div class="col-12 col-md-6">
+            <label class="form-label">Title</label>
+            <input type="text" name="title" value="{{ book.title if book else '' }}" class="form-control form-control-sm">
+        </div>
+
+        <div class="col-12 col-md-6">
+            <label class="form-label">Hepburn</label>
+            <input type="text" name="hepburn" value="{{ book.hepburn if book else '' }}" class="form-control form-control-sm">
+        </div>
+
+        <div class="col-12 col-md-6">
+            <label class="form-label">Author</label>
+            <input type="text" name="author" value="{{ book.author if book else '' }}" class="form-control form-control-sm">
+        </div>
+
+        <div class="col-12 col-md-6">
+            <label class="form-label">Published Date</label>
+            <input type="date" name="published_date" value="{{ book.published_date if book else '' }}" class="form-control form-control-sm">
+        </div>
+
+        <div class="col-12 col-md-6">
+            <label class="form-label">Release</label>
+            <input type="text" name="release" value="{{ book.release if book else '' }}" class="form-control form-control-sm">
+        </div>
+
+        <div class="col-12 col-md-6">
+            <label class="form-label">URL</label>
+            <input type="text" name="url" value="{{ book.url if book else '' }}" class="form-control form-control-sm">
+        </div>
+
+        <div class="col-12">
+            <label class="form-label">Summary</label>
+            <textarea name="summary" class="form-control form-control-sm">{{ book.summary if book else '' }}</textarea>
+        </div>
+
+        <div class="col-12 col-md-6">
+            <label class="form-label">Category</label>
+            <select name="category_id" class="form-select form-select-sm">
+                <option value="">-- Select Category --</option>
+                {% for c in categories %}
+                <option value="{{ c.id }}" {% if book and book.category_id == c.id %}selected{% endif %}>{{ c.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="col-12 mt-3 d-flex gap-2">
+            <button type="submit" class="btn btn-primary btn-sm">Save</button>
+            <a href="{{ url_for('index') }}" class="btn btn-secondary btn-sm">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}
