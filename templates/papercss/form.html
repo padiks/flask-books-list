@@ -1,0 +1,41 @@
+{% extends template_path('base') %}
+
+{% block title %}{{ 'Edit Book' if book else 'Add Book' }} - Flask Books List{% endblock %}
+
+{% block content %}
+<h2>{{ 'Edit Book' if book else 'Add Book' }}</h2>
+
+<form method="post">
+    <label>Title</label><br>
+    <input type="text" name="title" value="{{ book.title if book else '' }}"><br><br>
+
+    <label>Hepburn</label><br>
+    <input type="text" name="hepburn" value="{{ book.hepburn if book else '' }}"><br><br>
+
+    <label>Author</label><br>
+    <input type="text" name="author" value="{{ book.author if book else '' }}"><br><br>
+
+    <label>Published Date</label><br>
+    <input type="date" name="published_date" value="{{ book.published_date if book else '' }}"><br><br>
+
+    <label>Release</label><br>
+    <input type="text" name="release" value="{{ book.release if book else '' }}"><br><br>
+
+    <label>URL</label><br>
+    <input type="text" name="url" value="{{ book.url if book else '' }}"><br><br>
+
+    <label>Summary</label><br>
+    <textarea name="summary">{{ book.summary if book else '' }}</textarea><br><br>
+
+    <label>Category</label><br>
+    <select name="category_id">
+        <option value="">-- Select Category --</option>
+        {% for c in categories %}
+        <option value="{{ c.id }}" {% if book and book.category_id == c.id %}selected{% endif %}>{{ c.name }}</option>
+        {% endfor %}
+    </select><br><br>
+
+    <button type="submit">Save</button>
+    <a href="{{ url_for('index') }}">Cancel</a>
+</form>
+{% endblock %}

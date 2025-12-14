@@ -1,0 +1,43 @@
+{% extends template_path('base') %}
+
+{% block title %}{{ 'Edit Book' if book else 'Add Book' }} - Flask + Milligram{% endblock %}
+
+{% block content %}
+<h2>{{ 'Edit Book' if book else 'Add Book' }}</h2>
+
+<form method="post">
+    <label>Title</label>
+    <input type="text" name="title" value="{{ book.title if book else '' }}">
+
+    <label>Hepburn</label>
+    <input type="text" name="hepburn" value="{{ book.hepburn if book else '' }}">
+
+    <label>Author</label>
+    <input type="text" name="author" value="{{ book.author if book else '' }}">
+
+    <label>Published Date</label>
+    <input type="date" name="published_date" value="{{ book.published_date if book else '' }}">
+
+    <label>Release</label>
+    <input type="text" name="release" value="{{ book.release if book else '' }}">
+
+    <label>URL</label>
+    <input type="text" name="url" value="{{ book.url if book else '' }}">
+
+    <label>Summary</label>
+    <textarea name="summary">{{ book.summary if book else '' }}</textarea>
+
+    <label>Category</label>
+    <select name="category_id">
+        <option value="">-- Select Category --</option>
+        {% for c in categories %}
+        <option value="{{ c.id }}" {% if book and book.category_id == c.id %}selected{% endif %}>{{ c.name }}</option>
+        {% endfor %}
+    </select>
+
+    <div style="margin-top:12px;">
+        <button type="submit" class="btn">Save</button>
+        <a href="{{ url_for('index') }}" class="btn-delete">Cancel</a>
+    </div>
+</form>
+{% endblock %}

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Flask + PicoCSS{% endblock %}</title>
+
+    <!-- Favicon as inline SVG -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect x='10' y='10' width='30' height='30' fill='%231e90ff'/><rect x='60' y='10' width='30' height='30' fill='%23ff6347'/><circle cx='50' cy='70' r='20' fill='%2332cd32'/></svg>">
+
+    <!-- PicoCSS -->
+    <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@1.*/css/pico.min.css">
+
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+
+    <style>
+        body {
+            padding: 16px;
+            font-family: 'Segoe UI', sans-serif;
+        }
+        table.dataTable {
+            width: 100% !important;
+        }
+        td, th {
+            padding: 6px 8px;
+        }
+        .button-group a {
+            margin-right: 4px;
+            font-size: 12px;
+            padding: 2px 6px;
+        }
+        {% block extra_css %}{% endblock %}
+    </style>
+
+    {% block extra_head %}{% endblock %}
+</head>
+<body>
+    <main class="container">
+        <!-- Theme selector -->
+        <form method="POST" action="{{ url_for('set_theme') }}" style="margin-bottom: 16px;">
+            <label>
+                Theme
+                <select name="theme" onchange="this.form.submit()">
+                    {% for t in AVAILABLE_TEMPLATES %}
+                        <option value="{{ t }}" {% if session.get('theme', 'tailwind') == t %}selected{% endif %}>
+                            {{ t|replace('_', ' ')|title }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </label>
+        </form>
+
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <!-- DataTables JS -->
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+
+    {% block scripts %}{% endblock %}
+</body>
+</html>

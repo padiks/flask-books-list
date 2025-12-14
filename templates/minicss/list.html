@@ -1,0 +1,61 @@
+{% extends template_path('base') %}
+
+{% block title %}List Books - Flask + Mini.css{% endblock %}
+
+{% block content %}
+<section>
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 12px;">
+        <h2>Books Library</h2>
+        <a href="{{ url_for('add') }}" class="btn">Add New Book</a>
+    </div>
+
+    <div style="overflow-x:auto;">
+        <table id="books_table" class="striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Title</th>
+                    <th>Author</th>
+                    <th>Published</th>
+                    <th>Release</th>
+                    <th>Category</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for b in books %}
+                <tr>
+                    <td>{{ b.id }}</td>
+                    <td>{{ b.title }}</td>
+                    <td>{{ b.author }}</td>
+                    <td>{{ b.published_date }}</td>
+                    <td>{{ b.release }}</td>
+                    <td>{{ b.category_name }}</td>
+                    <td>
+                        <div class="button-group">
+                            <a href="{{ url_for('view', book_id=b.id) }}" class="btn">View</a>
+                            <a href="{{ url_for('edit', book_id=b.id) }}" class="btn-edit">Edit</a>
+                            <a href="{{ url_for('delete', book_id=b.id) }}" class="btn-delete">Delete</a>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+$(document).ready(function() {
+    $('#books_table').DataTable({
+        "pageLength": 10,
+        "lengthMenu": [5, 10, 20, 50],
+        "columnDefs": [
+            { "orderable": false, "targets": -1 }
+        ]
+    });
+});
+</script>
+{% endblock %}

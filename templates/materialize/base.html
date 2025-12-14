@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Flask + Materialize{% endblock %}</title>
+
+    <!-- Favicon as inline SVG -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect x='10' y='10' width='30' height='30' fill='%231e90ff'/><rect x='60' y='10' width='30' height='30' fill='%23ff6347'/><circle cx='50' cy='70' r='20' fill='%2332cd32'/></svg>">
+
+    <!-- Materialize CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
+
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #ffffff;
+            padding: 16px;
+        }
+        h2 {
+            margin-bottom: 12px;
+        }
+        table.dataTable {
+            width: 100% !important;
+        }
+        td, th {
+            padding: 6px 8px;
+        }
+        .button-group a {
+            margin-right: 4px;
+            font-size: 12px;
+            padding: 4px 8px;
+        }
+        .card {
+            padding: 16px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 16px;
+        }
+        {% block extra_css %}{% endblock %}
+    </style>
+
+    {% block extra_head %}{% endblock %}
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col s12">
+                <!-- Theme selector -->
+                <form method="POST" action="{{ url_for('set_theme') }}" class="inline-form">
+                    <div class="input-field">
+                        <select name="theme" onchange="this.form.submit()">
+                            {% for t in AVAILABLE_TEMPLATES %}
+                                <option value="{{ t }}" {% if session.get('theme', 'tailwind') == t %}selected{% endif %}>
+                                    {{ t|replace('_', ' ')|title }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                        <label>Theme</label>
+                    </div>
+                </form>
+
+                {% block content %}{% endblock %}
+            </div>
+        </div>
+    </div>
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <!-- Materialize JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <!-- DataTables JS -->
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+
+    <script>
+        // Initialize Materialize components
+        $(document).ready(function(){
+            $('select').formSelect();
+        });
+    </script>
+
+    {% block scripts %}{% endblock %}
+</body>
+</html>

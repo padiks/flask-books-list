@@ -1,0 +1,44 @@
+{% extends template_path('base') %}
+
+{% block title %}{{ 'Edit Book' if book else 'Add Book' }} - Metro UI{% endblock %}
+
+{% block content %}
+<div class="card shadow p-4" style="background: #ffffff; max-width: 600px; margin: auto;">
+    <h2>{{ 'Edit Book' if book else 'Add Book' }}</h2>
+    <form method="post">
+        <label>Title</label>
+        <input type="text" name="title" value="{{ book.title if book else '' }}" class="input w-100 mb-2">
+
+        <label>Hepburn</label>
+        <input type="text" name="hepburn" value="{{ book.hepburn if book else '' }}" class="input w-100 mb-2">
+
+        <label>Author</label>
+        <input type="text" name="author" value="{{ book.author if book else '' }}" class="input w-100 mb-2">
+
+        <label>Published Date</label>
+        <input type="date" name="published_date" value="{{ book.published_date if book else '' }}" class="input w-100 mb-2">
+
+        <label>Release</label>
+        <input type="text" name="release" value="{{ book.release if book else '' }}" class="input w-100 mb-2">
+
+        <label>URL</label>
+        <input type="text" name="url" value="{{ book.url if book else '' }}" class="input w-100 mb-2">
+
+        <label>Summary</label>
+        <textarea name="summary" class="input w-100 mb-2">{{ book.summary if book else '' }}</textarea>
+
+        <label>Category</label>
+        <select name="category_id" class="select w-100 mb-3">
+            <option value="">-- Select Category --</option>
+            {% for c in categories %}
+            <option value="{{ c.id }}" {% if book and book.category_id == c.id %}selected{% endif %}>{{ c.name }}</option>
+            {% endfor %}
+        </select>
+
+        <div class="d-flex gap-2">
+            <button type="submit" class="button primary small">Save</button>
+            <a href="{{ url_for('index') }}" class="button small">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

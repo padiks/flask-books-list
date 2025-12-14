@@ -1,0 +1,25 @@
+{% extends template_path('base') %}
+
+{% block title %}View Book - Flask + Mini.css{% endblock %}
+
+{% block content %}
+<h2>View Book</h2>
+
+<table class="striped">
+    <tbody>
+        <tr><th>ID</th><td>{{ book.id }}</td></tr>
+        <tr><th>Title</th><td>{{ book.title }}</td></tr>
+        <tr><th>Hepburn</th><td>{{ book.hepburn }}</td></tr>
+        <tr><th>Author</th><td>{{ book.author }}</td></tr>
+        <tr><th>Published Date</th><td>{{ book.published_date }}</td></tr>
+        <tr><th>Release</th><td>{{ book.release }}</td></tr>
+        <tr><th>URL</th><td>{{ book.url }}</td></tr>
+        <tr><th>Summary</th><td>{{ book.summary }}</td></tr>
+        <tr><th>Category</th><td>{{ book.category_name }}</td></tr>
+    </tbody>
+</table>
+
+<div style="margin-top:12px;">
+    <a href="{{ url_for('index') }}" class="btn">Back to list</a>
+</div>
+{% endblock %}

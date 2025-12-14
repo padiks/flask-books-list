@@ -1,0 +1,70 @@
+{% extends template_path('base') %}
+
+{% block title %}{{ 'Edit Book' if book else 'Add Book' }} - Flask + Materialize{% endblock %}
+
+{% block content %}
+<div class="container" style="max-width: 95%;">
+    <h4>{{ 'Edit Book' if book else 'Add Book' }}</h4>
+
+    <form method="post">
+        <div class="input-field">
+            <input type="text" id="title" name="title" value="{{ book.title if book else '' }}">
+            <label for="title">Title</label>
+        </div>
+
+        <div class="input-field">
+            <input type="text" id="hepburn" name="hepburn" value="{{ book.hepburn if book else '' }}">
+            <label for="hepburn">Hepburn</label>
+        </div>
+
+        <div class="input-field">
+            <input type="text" id="author" name="author" value="{{ book.author if book else '' }}">
+            <label for="author">Author</label>
+        </div>
+
+        <div class="input-field">
+            <input type="date" id="published_date" name="published_date" value="{{ book.published_date if book else '' }}">
+            <label for="published_date" class="active">Published Date</label>
+        </div>
+
+        <div class="input-field">
+            <input type="text" id="release" name="release" value="{{ book.release if book else '' }}">
+            <label for="release">Release</label>
+        </div>
+
+        <div class="input-field">
+            <input type="text" id="url" name="url" value="{{ book.url if book else '' }}">
+            <label for="url">URL</label>
+        </div>
+
+        <div class="input-field">
+            <textarea id="summary" name="summary" class="materialize-textarea">{{ book.summary if book else '' }}</textarea>
+            <label for="summary">Summary</label>
+        </div>
+
+        <div class="input-field">
+            <select name="category_id">
+                <option value="" disabled selected>-- Select Category --</option>
+                {% for c in categories %}
+                    <option value="{{ c.id }}" {% if book and book.category_id == c.id %}selected{% endif %}>{{ c.name }}</option>
+                {% endfor %}
+            </select>
+            <label>Category</label>
+        </div>
+
+        <div class="section">
+            <button type="submit" class="btn blue">Save</button>
+            <a href="{{ url_for('index') }}" class="btn red">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('select');
+    M.FormSelect.init(elems);
+});
+</script>
+{% endblock %}
